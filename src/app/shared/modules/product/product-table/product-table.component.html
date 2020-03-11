@@ -1,0 +1,116 @@
+<div>
+    <form [formGroup]="form">
+        <div>
+            <div class="table-wrapper">
+                <div class="table-container">
+                    <table class="table table-hover table-striped table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <ng-container *ngFor="let col of columns">
+                                    <th [style.width.%]="col.width">{{col.name}}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let productFormGroup of ProductForms.controls;let i=index;">
+                                <ng-container [formGroup]="productFormGroup">
+
+                                    <ng-container *ngFor="let col of columns">
+
+                                        <ng-container [ngSwitch]="col.type">
+                                            <td [style.width.%]="col.width">
+                                                <!--Serial No-->
+                                                <ng-container *ngSwitchCase="columnType.SerialNo">{{i+1}}</ng-container>
+                                                <!--Text-->
+                                                <ng-container *ngSwitchCase="columnType.Text">
+                                                    {{productFormGroup.get(col.bindWith).value}}
+                                                </ng-container>
+                                                <!--Number-->
+                                                <ng-container *ngSwitchCase="columnType.Number">
+                                                    <span class="pull-right">
+                                                        {{productFormGroup.get(col.bindWith).value | number : '1.2-2'}}
+                                                    </span>
+                                                </ng-container>
+                                                <!--Input Qty-->
+                                                <ng-container *ngSwitchCase="columnType.InputQty">
+                                                    <input class="form-control form-control-sm" formControlName="qty"
+                                                        name="qty_{{i}}" pKeyFilter="pnum" id="row_element_0_{{i}}"
+                                                        (keydown.enter)="handleEnter(0,i)" appFieldError />
+                                                </ng-container>
+                                                <!--Input Price-->
+                                                <ng-container *ngSwitchCase="columnType.InputPrice">
+                                                    <input class="form-control form-control-sm" formControlName="price"
+                                                        name="price_{{i}}" pKeyFilter="pnum" id="row_element_1_{{i}}"
+                                                        (keydown.enter)="handleEnter(1,i)" appFieldError />
+                                                </ng-container>
+                                                <!--Action-->
+                                                <ng-container *ngSwitchCase="columnType.Action">
+                                                    <div class="text-center">
+                                                        <a class="btn btn-sm btn-danger" href="javascript:void(0)"
+                                                            (click)="handleDelete(productFormGroup.get('productId').value)"><i
+                                                                class="fa fa-trash"></i></a>
+                                                    </div>
+                                                </ng-container>
+                                            </td>
+
+                                        </ng-container>
+
+                                    </ng-container>
+
+                                </ng-container>
+                            </tr>
+                        </tbody>
+
+                        <tfoot>
+                            <!--For total info-->
+                            <tr class="table-primary">
+                                <td [attr.colspan]="columns.length-3" style="vertical-align:middle">
+                                    <div class="product-search">
+                                        <app-product-search (itemSelect)="handleItemSelect($event)"
+                                            [focus]="focusSearch" [type]="type">
+                                        </app-product-search>
+                                    </div>
+
+                                    <strong class="pull-right mt-2">Total</strong>
+                                </td>
+                                <td>
+                                    <span>Qty.</span>
+                                    <strong class="mt-1 d-block">{{getTotal('qty') | number : '1.2-2'}}</strong>
+                                </td>
+                                <td>
+                                    <span>Amount</span>
+                                    <strong class="mt-1 d-block">{{getTotal('amount') | number : '1.2-2'}}</strong>
+                                </td>
+                                <td>
+                                    <span>Vat Amount</span>
+                                    <ng-container *ngIf="applyTax">
+                                        <strong
+                                            class="mt-1 d-block">{{getTotal('taxAmount') | number : '1.2-2'}}</strong>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!applyTax">
+                                        <strong class="mt-1 d-block">0</strong>
+                                    </ng-container>
+                                </td>
+                                <td colspan="2">
+                                    <span>Total</span>
+                                    <ng-container *ngIf="applyTax">
+                                        <strong class="mt-1 d-block">{{getTotal('total') | number : '1.2-2'}}</strong>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!applyTax">
+                                        <strong
+                                            class="mt-1 d-block">{{getTotal('total')-getTotal('taxAmount') | number : '1.2-2'}}</strong>
+                                    </ng-container>
+
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

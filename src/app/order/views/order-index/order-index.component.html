@@ -1,0 +1,18 @@
+<app-page-header title="Order List"></app-page-header>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <app-text-search (search)="handleSearch($event)" section="order"></app-text-search>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary pull-right" link="/app/order/manage" appNavigate><i
+                        class="fa fa-plus"></i> Create New</button>
+            </div>
+        </div>
+    </div>
+    <app-custom-table [columns]="columns" [rows]="result" [filter]="filter"
+        (filterChanged)="handlefilterChanged($event)" (action)="handleAction($event)"
+        [renderAction]="handleRenderAction" class="mb-3"></app-custom-table>
+</div>

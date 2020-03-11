@@ -1,0 +1,150 @@
+<app-page-header [title]="title" [breadcrumbs]="breadcrumbs">
+</app-page-header>
+
+<div *ngIf="quotation">
+    <div class="card">
+        <div class="card-body">
+            <div id="quotation-print-section">
+                <div class="row">
+                    <div class="col">
+                        <div class="p-3 mb-2 bg-primary text-white text-center">{{quotation.title}}</div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="pull-left">
+                            <div>
+                                <strong>{{quotation.branch.name}}</strong>
+                                <p class="line-break">{{quotation.branch.address}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="pull-right">
+                            <ng-container *ngIf="quotation.branch.logo">
+                                <img [src]="quotation.branch.logo" style="width: 200px;">
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            <strong>Customer</strong>
+                            <p>
+                                {{quotation.customer.name}}<br />
+                                {{quotation.customer.address}}<br />
+                                {{quotation.customer.mobileNo}}<br />
+                                {{quotation.customer.email}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="pull-right">
+                            <p>
+                                Quotation No. : <strong>{{quotation.quotationNo}}</strong><br />
+                                Issue Date :
+                                <strong>{{quotation.createdOn | todate | date : 'mediumDate'}}</strong><br />
+                                User Name: <strong>{{quotation.createdBy}}</strong><br />
+                                <ngx-barcode [bc-value]="quotation.quotationNo" [bc-display-value]="false"
+                                    [bc-width]="2" [bc-height]="35">
+                                </ngx-barcode>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:4%;">Sl#</th>
+                                    <th style="width:10%;">Item Code</th>
+                                    <th style="width:50%;">Name</th>
+                                    <th style="width:5%;">Unit</th>
+                                    <th style="width:5%;">Qty</th>
+                                    <th>Price</th>
+                                    <th>Vat Amt.</th>
+                                    <th>Total Amt.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of quotation.products;let i=index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.code}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.unitName}}</td>
+                                    <td align="right">{{item.quotationQty | number : '1.2-2'}}</td>
+                                    <td align="right">{{item.quotationUnitPrice | number : '1.2-2' }}</td>
+                                    <td align="right">{{item.quotationTaxAmount | number : '1.2-2' }}</td>
+                                    <td align="right">{{item.quotationTotalAmount | number : '1.2-2' }}</td>
+                                </tr>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td align="left" colspan="5" rowspan="3">Remarks: {{quotation.comment}}</td>
+                                    <td colspan="2" align="right">Total Amount</td>
+                                    <td align="right">
+                                        <strong>{{getTotal('quotationUnitPrice')| number : '1.2-2'}}</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" align="right">Vat Amount</td>
+                                    <td align="right">
+                                        <strong>{{getTotal('quotationTaxAmount')| number : '1.2-2'}}</strong>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" align="right">Net Total</td>
+                                    <td align="right">
+                                        <strong>{{getTotal('quotationTotalAmount')| number : '1.2-2'}}</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+                <!--Terms & Condition-->
+                <div class="row">
+                    <div class="col-8">
+                        <strong><u>Terms & Conditions</u></strong>
+                        <div [innerHtml]="quotation.terms"></div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <strong><u>Bank Details</u></strong>
+                        <p class="line-break">{{quotation.branch.bankDetails}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mt-3 text-center">
+        <ng-container *ngIf="hasPermission(permission.can_manage_quotation) && quotation.canMarkAsInvoice">
+            <button class="btn btn-secondary" (click)="handleMarkAsInvoice()">
+                <i class="fa fa-file-o"></i> Mark As Invoice
+            </button>
+            &nbsp;
+        </ng-container>
+
+
+        <button class="btn btn-primary" printSectionId="quotation-print-section" [useExistingCss]="true" ngxPrint>
+            <i class="fa fa-print"></i> Print
+        </button>
+        &nbsp;
+        <button class="btn btn-primary" (click)="exportToPdf()"><i class="fa fa-file-pdf-o"></i> Export To PDF</button>
+    </div>
+
+</div>
+
+<p-confirmDialog></p-confirmDialog>

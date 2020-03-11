@@ -1,0 +1,79 @@
+<form [formGroup]="form">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name" name="name" placeholder="Required" appFieldError>
+        <app-inline-field-error [form]="form" control="name">
+        </app-inline-field-error>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Contact No</label>
+                <input type="text" class="form-control" formControlName="mobileNo" name="mobileNo"
+                    placeholder="Required" appFieldError>
+                <app-inline-field-error [form]="form" control="mobileNo">
+                </app-inline-field-error>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" formControlName="email" name="email" appFieldError>
+                <app-inline-field-error [form]="form" control="email">
+                </app-inline-field-error>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label>Account Type</label>
+                <select formControlName="accountType" class="form-control" appFieldError>
+                    <option *ngFor="let item of accountTypes" [value]="item.key">{{item.value}}</option>
+                </select>
+                <app-inline-field-error [form]="form" control="accountType">
+                </app-inline-field-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Opening Balance</label>
+                <input type="text" class="form-control" formControlName="openingBalance" name="openingBalance"
+                    placeholder="Required" pKeyFilter="num" appFieldError>
+                <app-inline-field-error [form]="form" control="openingBalance">
+                </app-inline-field-error>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>Credit Limit</label>
+                <input type="text" class="form-control" formControlName="creditLimit" name="creditLimit"
+                    placeholder="Required" pKeyFilter="num" appFieldError>
+                <app-inline-field-error [form]="form" control="creditLimit">
+                </app-inline-field-error>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>Term</label>
+                <select formControlName="terms" class="form-control" appFieldError>
+                    <option *ngFor="let item of terms" [value]="item.key">{{item.value}}</option>
+                </select>
+                <app-inline-field-error [form]="form" control="terms">
+                </app-inline-field-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Address</label>
+        <textarea type="text" class="form-control" formControlName="address" name="address" appFieldError></textarea>
+        <app-inline-field-error [form]="form" control="address">
+        </app-inline-field-error>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!form.valid">Submit</button>
+</form>

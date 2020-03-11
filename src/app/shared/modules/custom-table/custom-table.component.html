@@ -1,0 +1,82 @@
+<p-table [columns]="dataColumns" [value]="values" [paginator]="true" [rows]="dataFilter.perPage" [lazy]="true"
+    (onLazyLoad)="handleLazyEvent($event)" [totalRecords]="totalRecords" [loading]="loading"
+    [rowsPerPageOptions]="[10,20,50]" showCurrentPageReport="true" [currentPageReportTemplate]="showingRecord"
+    tableStyleClass="table table-hover table-striped table-bordered table-sm">
+
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <!--Data header-->
+            <ng-container *ngFor="let col of columns">
+                <th *ngIf="col.sortKey" [pSortableColumn]="col.sortKey" [style.width.%]="col.width>0?col.width:''">
+                    {{col.value}} <p-sortIcon [field]="col.key"></p-sortIcon>
+                </th>
+                <th *ngIf="!col.sortKey" [style.width.%]="col.width>0?col.width:''">{{col.value}}</th>
+            </ng-container>
+            <!--Action header-->
+            <th *ngIf="actionColumns.length>0">Action</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <!--Data Column-->
+            <td *ngFor="let col of columns">
+
+                <ng-container [ngSwitch]="col.type">
+
+                    <ng-container *ngSwitchCase="columnType.Text">{{rowData[col.key]}}</ng-container>
+
+                    <!--Yes no column-->
+                    <ng-container *ngSwitchCase="columnType.YesNo">
+                        <div class="text-center">
+                            <p-inputSwitch (onChange)="handleAction(col,rowData)" [(ngModel)]="rowData[col.key]">
+                            </p-inputSwitch>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="columnType.Number">
+                        <div class="pull-right">
+                            {{rowData[col.key] | number : '2.2-2'}}
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="columnType.DateTime">
+                        {{ toDate(rowData[col.key]) | date : 'medium'}}
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="columnType.Date">
+                        {{ toDate(rowData[col.key]) | date : 'mediumDate'}}
+                    </ng-container>
+
+                </ng-container>
+
+                <!--Action Column-->
+            <td *ngIf="actionColumns.length>0">
+                <ng-container>
+                    <span class="action-row" *ngFor="let col of actionColumns">
+                        <!--Check for action render-->
+                        <ng-container *ngIf="canRenderAction(col,rowData)">
+                            <!--For Icon-->
+                            <button class="btn btn-sm" *ngIf="col.icon" (click)="handleAction(col,rowData)"
+                                title="{{col.value}}"><i class="{{col.icon}}"></i></button>
+
+                            <!--For Without Icon-->
+                            <button class="btn btn-sm" *ngIf="!col.icon"
+                                (click)="handleAction(col,rowData)">{{col.value}}</button>
+
+                        </ng-container>
+                    </span>
+                </ng-container>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+            <td [attr.colspan]="columns.length+1" align="center">
+                No records found
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>

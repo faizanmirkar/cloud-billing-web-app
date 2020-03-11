@@ -1,0 +1,184 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-7">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name" name="name" placeholder="Required"
+                    appFieldError />
+                <app-inline-field-error [form]="form" control="name">
+                </app-inline-field-error>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Code</label>
+                        <input type="text" class="form-control" formControlName="code" name="code"
+                            placeholder="Required" appFieldError />
+                        <app-inline-field-error [form]="form" control="code">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Barcode</label>
+                        <input type="text" class="form-control" formControlName="barcode" name="barcode"
+                            placeholder="Required" appFieldError />
+                        <app-inline-field-error [form]="form" control="barcode">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Category <a href="javascript:void(0)" class="pull-right link"
+                                (click)="addCategory()">+Add</a></label>
+                        <p-dropdown styleClass="w-100" [options]="categories" formControlName="categoryId"
+                            name="categoryId" (onChange)="renderSubCategory($event)" filter="true"
+                            autoDisplayFirst="false" placeholder="Select" appFieldError>
+                        </p-dropdown>
+                        <app-inline-field-error [form]="form" control="categoryId">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>SubCategory <a href="javascript:void(0)" class="pull-right link"
+                                (click)="addSubCategory()">+Add</a></label>
+                        <p-dropdown styleClass="w-100" [options]="subCategories" formControlName="subCategoryId"
+                            name="subCategoryId" filter="true" autoDisplayFirst="false" placeholder="Select"
+                            appFieldError>
+                        </p-dropdown>
+                        <app-inline-field-error [form]="form" control="subCategoryId">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Unit <a href="javascript:void(0)" class="pull-right link"
+                                (click)="addUnit()">+Add</a></label>
+                        <p-dropdown styleClass="w-100" [options]="units" formControlName="unitId" name="unitId"
+                            filter="true" autoDisplayFirst="false" placeholder="Select" appFieldError>
+                        </p-dropdown>
+                        <app-inline-field-error [form]="form" control="unitId">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Tax <a href="javascript:void(0)" class="pull-right link"
+                                (click)="addTax()">+Add</a></label>
+                        <p-dropdown styleClass="w-100" [options]="taxes" formControlName="taxId" name="taxId"
+                            filter="true" autoDisplayFirst="false" placeholder="Select" (onChange)="handleTaxChange()"
+                            appFieldError>
+                        </p-dropdown>
+                        <app-inline-field-error [form]="form" control="taxId">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Order Level</label>
+                        <input type="text" class="form-control" formControlName="orderLevel" name="orderLevel"
+                            pKeyFilter="pint" appFieldError />
+                        <app-inline-field-error [form]="form" control="orderLevel">
+                        </app-inline-field-error>
+                    </div>
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <h5>Price</h5>
+            <div class="location-price-container">
+                <div formGroupName="price">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Cost Price Exclusive</label>
+                                <input type="text" class="form-control" formControlName="costPrice" name="costPrice"
+                                    pKeyFilter="pnum" placeholder="Required" (change)="handleCostPriceChange()"
+                                    appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="costPrice">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Cost Price Inclusive</label>
+                                <input type="text" class="form-control" formControlName="costPriceInclusive"
+                                    name="costPriceInclusive" pKeyFilter="pnum" placeholder="Required"
+                                    (change)="handleCostPriceInclusiveChange()" appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="costPriceInclusive">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>PTC %</label>
+                                <input type="text" class="form-control" formControlName="ptc" name="ptc"
+                                    pKeyFilter="pnum" placeholder="Required" (change)="handlePtcChange()"
+                                    appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="ptc">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Control Discount %</label>
+                                <input type="text" class="form-control" formControlName="minDiscount" name="minDiscount"
+                                    pKeyFilter="pnum" appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="minDiscount">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Selling Price Exclusive</label>
+                                <input type="text" class="form-control" formControlName="sellingPrice"
+                                    name="sellingPrice" pKeyFilter="pnum" placeholder="Required"
+                                    (change)="handleSellingPriceChange()" appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="sellingPrice">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Selling Price Inclusive</label>
+                                <input type="text" class="form-control" formControlName="sellingPriceInclusive"
+                                    name="sellingPriceInclusive" pKeyFilter="pnum" placeholder="Required"
+                                    (change)="handleSellingPriceInclusiveChange()" appFieldError />
+                                <app-inline-field-error [form]="form.get('price')" control="sellingPriceInclusive">
+                                </app-inline-field-error>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!form.valid">Submit</button>
+    &nbsp;
+    <button type="button" class="btn btn-danger" (click)="clear()" *ngIf="!productModel">Clear</button>
+</form>

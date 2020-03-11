@@ -1,0 +1,59 @@
+<app-page-header [title]="title" [breadcrumbs]="breadcrumbs">
+</app-page-header>
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Supplier <a href="javascript:void(0)" class="pull-right link" (click)="addSupplier()"
+                                *ngIf="hasPermission(permission.can_manage_supplier)">+Add</a></label>
+                        <p-dropdown styleClass="w-100" [options]="suppliers" formControlName="supplierId"
+                            name="categoryId" filter="true" autoDisplayFirst="false" placeholder="Select">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <app-product-table formControlName="item" [items]="products" (itemSet)="handleItemSet()" [type]="type">
+                </app-product-table>
+            </div>
+            <div class="row product-action-area mt-3">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" formControlName="comment" class="form-control pull-left"
+                                placeholder="Remarks" />
+                        </div>
+
+                        <div class="col-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <input type="checkbox" formControlName="applyTax"
+                                            (change)="handleTaxCheckChanged()"> <span class="ml-2">Vat %</span>
+                                    </span>
+                                </div>
+                                <select formControlName="taxId" (change)="handleTaxChanged()">
+                                    <option *ngFor="let item of taxes" [value]="item.taxId">
+                                        {{item.name}} ({{item.percentage}}%)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary pull-right" (click)="submit()"
+                                [disabled]="!form.valid"><i class="fa fa-plus"></i>
+                                Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

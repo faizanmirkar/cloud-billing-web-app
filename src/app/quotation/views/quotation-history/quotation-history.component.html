@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col">
+        <div class="history-container">
+            <app-custom-table [columns]="columns" [rows]="result" [filter]="filter"
+                (filterChanged)="handlefilterChanged($event)" (action)="handleAction($event)"></app-custom-table>
+        </div>
+    </div>
+</div>

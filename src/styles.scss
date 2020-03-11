@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+$danger-color:#d9534f;
+.field-error{
+    border-color: $danger-color !important;
+}
+
+.field-inline-error {
+    display: block;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: $danger-color !important;
+}
+
+.danger{
+    color: $danger-color !important;
+}
+
+th{
+    border:0 !important
+}
+
+.form-group label{
+    width: 100%;
+}
+
+.breadcrumb {
+    padding: 0px !important;
+    background-color:inherit !important;
+    border-radius:0px !important;
+    margin: 0px !important;
+}
+
+.product-action-area{
+    .row{
+        border: 1px solid #e4e4e4;
+        margin: 0px;
+        padding: 5px;
+        background-color: #f8f9fa;
+        select{
+            border: 0px;
+            background-color: inherit !important;
+        }
+    }
+}
+
+.line-break{
+    white-space: pre-wrap;
+}
+
+body .ui-paginator {
+    background-color:white !important;
+    border:0px !important;
+    text-align: right;
+    margin-right: 10px;
+}

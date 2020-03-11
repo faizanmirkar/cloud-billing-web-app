@@ -1,0 +1,62 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Quotation Term <span class="danger">*</span> </label>
+                <p-editor formControlName="quotationTerm" [style]="{'height':'100px'}">
+                    <p-header>
+                        <span class="ql-formats">
+                            <button class="ql-bold" aria-label="Bold"></button>
+                            <button class="ql-italic" aria-label="Italic"></button>
+                            <button class="ql-underline" aria-label="Underline"></button>
+                            <button class="ql-list" value="ordered" aria-label="Order List"></button>
+                            <button class="ql-list" value="bullet" aria-label="Bulet List"></button>
+                        </span>
+                    </p-header>
+                </p-editor>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label>Invoice Term <span class="danger">*</span></label>
+                <p-editor formControlName="invoiceTerm" [style]="{'height':'100px'}">
+                    <p-header>
+                        <span class="ql-formats">
+                            <button class="ql-bold" aria-label="Bold"></button>
+                            <button class="ql-italic" aria-label="Italic"></button>
+                            <button class="ql-underline" aria-label="Underline"></button>
+                            <button class="ql-list" value="ordered" aria-label="Order List"></button>
+                            <button class="ql-list" value="bullet" aria-label="Bulet List"></button>
+                        </span>
+                    </p-header>
+                </p-editor>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>Order Term</label>
+                <p-editor formControlName="orderTerm" [style]="{'height':'100px'}">
+                    <p-header>
+                        <span class="ql-formats">
+                            <button class="ql-bold" aria-label="Bold"></button>
+                            <button class="ql-italic" aria-label="Italic"></button>
+                            <button class="ql-underline" aria-label="Underline"></button>
+                            <button class="ql-list" value="ordered" aria-label="Order List"></button>
+                            <button class="ql-list" value="bullet" aria-label="Bulet List"></button>
+                        </span>
+                    </p-header>
+                </p-editor>
+            </div>
+        </div>
+
+        <div class="col">
+
+        </div>
+    </div> -->
+
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!form.valid">Submit</button>
+</form>

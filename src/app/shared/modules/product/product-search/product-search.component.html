@@ -1,0 +1,24 @@
+<div>
+    <p-autoComplete #autoCompleteProduct placeholder="Search by Item Code, Barcode, Name" styleClass="w-100"
+        inputStyleClass="w-100" [minLength]="3" [suggestions]="results" (completeMethod)="handleSearch($event)"
+        (onSelect)="handleSearchSelect($event)" field="name" emptyMessage="No record found"
+        (onKeyUp)="handleKeyEvent($event)">
+        <ng-template let-product pTemplate="item">
+            <div class="product-search">
+                <div class="title">{{product.code}} - {{product.name}}</div>
+                <div class="desc">
+                    <div>
+                        <span>{{product.categoryName}}<span *ngIf="product.subCategoryName">,
+                                {{product.subCategoryName}}</span></span>
+                    </div>
+                    <div>
+                        <span><i class="fa fa-balance-scale"></i> {{product.unitName}}</span>
+                        <span class="ml-1"><i class="fa fa-money"></i>
+                            {{displayPrice(product) | number : '1.2-2'}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</div>

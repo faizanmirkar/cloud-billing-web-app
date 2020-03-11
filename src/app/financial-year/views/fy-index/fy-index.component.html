@@ -1,0 +1,15 @@
+<app-page-header title="Financial Year"></app-page-header>
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary pull-right" (click)="manageView(null)"><i class="fa fa-plus"></i> Create
+                    New</button>
+            </div>
+        </div>
+    </div>
+    <app-custom-table [columns]="columns" [rows]="result" [filter]="filter"
+        (filterChanged)="handlefilterChanged($event)" (action)="handleAction($event)"
+        [renderAction]="handleRenderAction" class="mb-3"></app-custom-table>
+</div>

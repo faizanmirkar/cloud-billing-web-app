@@ -1,0 +1,29 @@
+<ul class="sidebar-nav">
+    <li class="sidebar-header">
+        Menus
+    </li>
+
+    <li class="sidebar-item">
+        <a [routerLink]="['/app']" class="sidebar-link">
+            <i class="align-middle fa fa-home"></i> <span class="align-middle">Dashboard</span>
+        </a>
+    </li>
+
+    <li class="sidebar-item" *ngFor="let menu of menus">
+        <a href="javascript:void(0)" class="sidebar-link" (click)="toggle(menu)">
+            <i class="align-middle {{menu.icon}}"></i> <span class="align-middle">{{menu.name}}</span>
+        </a>
+        <ul class="sidebar-dropdown list-unstyled collapse show" *ngIf="menu.opened">
+            <li class="sidebar-item" *ngFor="let item of menu.items" routerLinkActive="active">
+                <a class="sidebar-link" [routerLink]="[item.link]">{{item.name}}</a>
+            </li>
+        </ul>
+    </li>
+
+    <!-- <li class="sidebar-item">
+        <a href="javascript:void(0)" class="sidebar-link" (click)="signout()">
+            <i class="align-middle fa fa-sign-out"></i> <span class="align-middle">Sign out</span>
+        </a>
+    </li> -->
+
+</ul>

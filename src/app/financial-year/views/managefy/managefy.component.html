@@ -1,0 +1,23 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label>From Date</label>
+                <p-calendar [showIcon]="true" formControlName="fromDate"></p-calendar>
+                <app-inline-field-error [form]="form" control="fromDate">
+                </app-inline-field-error>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label>To Date</label>
+                <p-calendar [showIcon]="true" formControlName="toDate"></p-calendar>
+                <app-inline-field-error [form]="form" control="toDate">
+                </app-inline-field-error>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="!form.valid">Submit</button>
+</form>
